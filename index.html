@@ -1,0 +1,33 @@
+<!doctype html>
+
+<title>CouchDB MapReduce Quick Simulator</title>
+<body></body>
+<script src="pouchdb-3.0.6.js"></script>
+<script src="pouchdb.memory.js"></script>
+<script>
+  var pouch = new PouchDB('simulator', {adapter: 'memory'})
+
+  pouch.bulkDocs([
+    {year: 2014, month, 1, color: 'red'},
+    {year: 2014, month, 2, color: 'blue'},
+    {year: 2014, month, 2, color: 'red'},
+    {year: 2014, month, 3, color: 'blue'},
+    {year: 2014, month: 3, color: 'blue'},
+    {_id: '_design/simulator', views: {
+      simulator: {
+        map: 'function (doc) { emit([doc.year, doc.color]) }',
+        reduce: '_count'
+      }
+    }}
+  ], function () {
+
+    pouch.query('simulator', {
+      reduce: true,
+      group: true,
+      group_level: 1
+    }, function (err, res) {
+      console.log(res)
+    })
+
+  })
+</script>
