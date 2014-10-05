@@ -74,8 +74,16 @@ Main = React.createClass
       catch e
         value = null
 
+      try
+        parsedKey = JSON.parse "[#{key}]"
+      catch e
+        try
+          parsedKey = JSON.load key
+        catch e
+          parsedKey = YAML.load key
+
       docs.push {
-        key: JSON.parse "[#{key}]"
+        key: parsedKey
         value: JSON.parse value
       }
 
