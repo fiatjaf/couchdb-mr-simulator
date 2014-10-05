@@ -24,6 +24,9 @@ Main = React.createClass
         @state.params = state.params
       catch e
 
+  componentDidMount: ->
+    @recalc()
+
   render: ->
     (div {},
       (div className: 'third',
