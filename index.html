@@ -1,33 +1,16 @@
 <!doctype html>
 
+<meta charset="utf-8">
 <title>CouchDB MapReduce Quick Simulator</title>
-<body></body>
+<link href="https://cdn.rawgit.com/picnicss/picnic/master/releases/v1.1.min.css" rel="stylesheet">
+<link href="site.css" rel="stylesheet">
+<body>
+  <h1>CouchDB MapReduce Simulator</h1>
+
+  <main id="main"></main>
+
+  <div>For quickly testing the results of hypotethical emitted values when you are thinking about using strange reduce functions or reduce functions with group_level parameters.</div>
+</body>
 <script src="pouchdb-3.0.6.js"></script>
 <script src="pouchdb.memory.js"></script>
-<script>
-  var pouch = new PouchDB('simulator', {adapter: 'memory'})
-
-  pouch.bulkDocs([
-    {year: 2014, month, 1, color: 'red'},
-    {year: 2014, month, 2, color: 'blue'},
-    {year: 2014, month, 2, color: 'red'},
-    {year: 2014, month, 3, color: 'blue'},
-    {year: 2014, month: 3, color: 'blue'},
-    {_id: '_design/simulator', views: {
-      simulator: {
-        map: 'function (doc) { emit([doc.year, doc.color]) }',
-        reduce: '_count'
-      }
-    }}
-  ], function () {
-
-    pouch.query('simulator', {
-      reduce: true,
-      group: true,
-      group_level: 1
-    }, function (err, res) {
-      console.log(res)
-    })
-
-  })
-</script>
+<script src="main.js"></script>
