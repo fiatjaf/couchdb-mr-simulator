@@ -79,6 +79,9 @@
 	      }
 	    }
 	  },
+	  componentDidMount: function() {
+	    return this.recalc();
+	  },
 	  render: function() {
 	    return div({}, div({
 	      className: 'third'
@@ -116,7 +119,7 @@
 	    });
 	  },
 	  recalc: function(e) {
-	    var docs, emitted, key, params, reduce, row, splittedRow, value, _i, _len;
+	    var docs, emitted, key, params, parsedKey, reduce, row, splittedRow, value, _i, _len;
 	    emitted = this.refs.emitted.getDOMNode().value.split('\n');
 	    docs = [];
 	    for (_i = 0, _len = emitted.length; _i < _len; _i++) {
@@ -129,8 +132,19 @@
 	        e = _error;
 	        value = null;
 	      }
+	      try {
+	        parsedKey = JSON.parse("[" + key + "]");
+	      } catch (_error) {
+	        e = _error;
+	        try {
+	          parsedKey = JSON.load(key);
+	        } catch (_error) {
+	          e = _error;
+	          parsedKey = YAML.load(key);
+	        }
+	      }
 	      docs.push({
-	        key: JSON.parse("[" + key + "]"),
+	        key: parsedKey,
 	        value: JSON.parse(value)
 	      });
 	    }
