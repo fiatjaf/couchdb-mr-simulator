@@ -110,6 +110,9 @@ Main = React.createClass
 
         @pouch.put ddoc, =>
           @pouch.query 'simulate', params, (err, res) =>
+            if err
+              @setState display: JSON.stringify err
+
             formatted = []
             for row in res.rows
               if row.id
