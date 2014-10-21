@@ -36,7 +36,7 @@ Main = React.createClass
           defaultValue: @defaultEmitted
         )
       )
-      (div className: 'third',
+      (div className: 'fourth',
         (textarea
           value: @state.params
           onChange: @changeParams
@@ -46,7 +46,7 @@ Main = React.createClass
           onClick: @save
         , 'Save to URL')
       )
-      (div className: 'third',
+      (div className: '',
         (pre {},
           @state.display if @state.display
         )
