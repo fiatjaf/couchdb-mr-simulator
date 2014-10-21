@@ -69,6 +69,7 @@ Main = React.createClass
   recalc: (e) ->
     emitted = @refs.emitted.getDOMNode().value.split('\n')
     docs = []
+
     for row in emitted
       splittedRow = row.split(':')
       key = splittedRow[0].trim()
@@ -78,16 +79,16 @@ Main = React.createClass
         value = null
 
       try
-        parsedKey = JSON.parse "[#{key}]"
+        parsedKey = YAML.load "[#{key}]"
       catch e
         try
-          parsedKey = JSON.load key
+          parsedKey = YAML.load key
         catch e
           parsedKey = YAML.load key
 
       docs.push {
         key: parsedKey
-        value: JSON.parse value
+        value: YAML.load value
       }
 
     params = YAML.load(@state.params) or {}
